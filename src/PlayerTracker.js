@@ -63,6 +63,20 @@ module.exports = PlayerTracker;
 
 // Setters/Getters
 
+PlayerTracker.prototype.setTeam = function(name) {
+    switch (name) {
+        case 'NTHU':
+            this.team = 0
+            break;
+        case 'NCTU':
+            this.team = 1
+            break;
+        default:
+            this.team = 2
+            break;
+    }
+}
+
 PlayerTracker.prototype.setName = function(name) {
     this.name = name;
 };

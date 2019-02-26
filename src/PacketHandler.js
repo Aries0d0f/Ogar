@@ -39,6 +39,17 @@ PacketHandler.prototype.handleMessage = function(message) {
                 this.socket.playerTracker.spectate = true;
             }
             break;
+        case 2:
+            if (this.protocolVersion == 5) {
+                // Check for invalid packets
+                if ((message.length + 1) % 2 == 1) break;
+                var teamName = message.slice(1, message.length - 1).toString('ucs2');
+                this.setTeamName(teamName);
+            } else {
+                var teamName = message.slice(1, message.length - 1).toString('utf8');
+                this.setTeamName(teamName);
+            }
+            break;
         case 16:
             var client = this.socket.playerTracker;
             // Set Target
@@ -101,6 +112,12 @@ PacketHandler.prototype.handleMessage = function(message) {
             break;
     }
 };
+
+PacketHandler.prototype.setTeamName = function(name) {
+    var client = this.socket.playerTracker;
+
+    client.setTeam(name);
+}
 
 PacketHandler.prototype.setNickname = function(newNick) {
     var client = this.socket.playerTracker;
