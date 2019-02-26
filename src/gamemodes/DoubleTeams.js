@@ -9,20 +9,25 @@ function Teams() {
     this.packetLB = 50;
     this.haveTeams = true;
     this.colorFuzziness = 24;
+    this.teamName = ['NTHU', 'NCTU', 'YM', 'MEOW']
 
     // Special
-    this.teamAmount = 3; // Amount of teams. Having more than 3 teams will cause the leaderboard to work incorrectly (client issue).
+    this.teamAmount = 4; // Amount of teams. Having more than 3 teams will cause the leaderboard to work incorrectly (client issue).
     this.colors = [{
-        'r': 223,
-        'g': 0,
-        'b': 0
+        'r': 117,
+        'g': 70,
+        'b': 254
+    }, {
+        'r': 0,
+        'g': 154,
+        'b': 255
+    }, {
+        'r': 245,
+        'g': 30,
+        'b': 106
     }, {
         'r': 0,
         'g': 0,
-        'b': 223
-    }, {
-        'r': 0,
-        'g': 223,
         'b': 0
     }, ]; // Make sure you add extra colors here if you wish to increase the team amount [Default colors are: Red, Green, Blue]
     this.nodes = []; // Teams
@@ -54,7 +59,7 @@ function range(a, min, max) {
 // Override
 
 Teams.prototype.onPlayerSpawn = function(gameServer, player) {
-    console.log({ 'name': player.name, 'team': player.team == 0 ? 'NTHU' : 'NCTU' })
+    console.log({ 'name': player.name, 'team': this.teamName[player.team] })
     // Random color based on team
     player.color = this.getTeamColor(player.team);
     // Spawn player

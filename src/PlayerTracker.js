@@ -71,8 +71,13 @@ PlayerTracker.prototype.setTeam = function(name) {
         case 'NCTU':
             this.team = 1
             break;
-        default:
+        case 'YM':
             this.team = 2
+            break;
+        case 'MEOW':
+            this.team = 3
+            break;
+        default:
             break;
     }
 }
