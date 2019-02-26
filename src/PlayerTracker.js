@@ -232,7 +232,8 @@ PlayerTracker.prototype.update = function() {
             this.gameServer.leaderboard,
             this.gameServer.gameMode.packetLB,
             this.socket.packetHandler.protocolVersion,
-            this.pID
+            this.pID,
+            this.gameServer.teamleaderboard
         ));
 
     var box = this.getBox().getBounds();

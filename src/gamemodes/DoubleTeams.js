@@ -6,7 +6,7 @@ function Teams() {
     this.ID = 1;
     this.name = "Teams";
     this.decayMod = 1.5;
-    this.packetLB = 50;
+    this.packetLB = 51;
     this.haveTeams = true;
     this.colorFuzziness = 24;
     this.teamName = ['NTHU', 'NCTU', 'YM', 'MEOW']
@@ -124,6 +124,33 @@ Teams.prototype.onCellMove = function(cell, gameServer) {
 };
 
 Teams.prototype.updateLB = function(gameServer) {
+    // FFA-like
+    var leaderboard = [];
+
+    // First off remove disconenected or spectating players
+    var players = [];
+    gameServer.clients.forEach(function(player) {
+        if (!player) return;
+        if (player.playerTracker.cells.length <= 0) return;
+        if (player.playerTracker.disconnect > 0) return;
+        players.push(player.playerTracker);
+    });
+
+    players.sort(function(a, b) {
+        try {
+            return b.getScore(true) - a.getScore(true);
+        } catch (e) {
+            return 0;
+        }
+    });
+
+    leaderboard = players.slice(0, gameServer.config.serverMaxLB);
+
+    this.rankOne = leaderboard[0];
+    gameServer.leaderboard = leaderboard;
+
+    // Pie
+
     var total = 0;
     var teamMass = [];
     // Get mass
@@ -150,6 +177,6 @@ Teams.prototype.updateLB = function(gameServer) {
             continue;
         }
 
-        gameServer.leaderboard[i] = teamMass[i] / total;
+        gameServer.teamleaderboard[i] = teamMass[i] / total;
     }
 };

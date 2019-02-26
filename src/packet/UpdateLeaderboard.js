@@ -1,7 +1,8 @@
 var DynamicBuffer = require('./DynamicBuffer');
 
-function UpdateLeaderboard(leaderboard, packetLB, protocolVersion, sendingUser) {
+function UpdateLeaderboard(leaderboard, packetLB, protocolVersion, sendingUser, teamleaderboard = null) {
     this.leaderboard = leaderboard;
+    this.teamleaderboard = teamleaderboard;
     this.packetLB = packetLB;
     this.protocolVersion = protocolVersion;
     this.sendingUser = sendingUser;
@@ -58,6 +59,33 @@ UpdateLeaderboard.prototype.build = function() {
             buffer.setUint32(this.leaderboard.length);                          // Color amount
             for (var i = 0; i < this.leaderboard.length; i++) {
                 buffer.setFloat32(this.leaderboard[i]);                         // A color's size
+            }
+            break;
+
+        case 51:
+            // FFA leaderboard list
+            buffer.setUint8(51);                                                // Packet ID
+            buffer.setUint32(this.leaderboard.length);                          // Player amount
+            for (var i = 0; i < this.leaderboard.length; i++) {
+                var player = this.leaderboard[i];
+                var name = player.getName();
+                name = name ? JSON.stringify({'name': name, 'team': player.team}) : "";
+                if (this.protocolVersion != 5) {
+                    var isMe = player.pID == this.sendingUser ? 1 : 0;
+                    buffer.setUint32(isMe);                                     // If to display red color text
+                    buffer.setStringUTF8(name);                                 // UTF-8 string
+                    buffer.setUint8(0);                                         // UTF-8 null terminator
+                } else {
+                    if (player.cells[0])
+                        buffer.setUint32(player.cells[0].nodeId);               // First cell node ID
+                    else buffer.setUint32(0);                                   // In case of error
+                    buffer.setStringUnicode(name);                              // Unicode string
+                    buffer.setUint16(0);                                        // Unicode null terminator
+                }
+            }
+            buffer.setUint32(this.teamleaderboard.length);                          // Color amount
+            for (var i = 0; i < this.teamleaderboard.length; i++) {
+                buffer.setFloat32(this.teamleaderboard[i]);                         // A color's size
             }
             break;
     }

@@ -47,6 +47,7 @@ function GameServer() {
     this.nodesPlayer = []; // Nodes controlled by players
 
     this.leaderboard = [];
+    this.teamleaderboard = [];
     this.largestClient; // Required for spectators
 
     this.updateLoopBind = null;
