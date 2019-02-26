@@ -54,7 +54,7 @@ function range(a, min, max) {
 // Override
 
 Teams.prototype.onPlayerSpawn = function(gameServer, player) {
-    console.log({ 'name': player.name, 'team': player.team == 1 ? 'NTHU' : 'NCTU' })
+    console.log({ 'name': player.name, 'team': player.team == 0 ? 'NTHU' : 'NCTU' })
     // Random color based on team
     player.color = this.getTeamColor(player.team);
     // Spawn player
