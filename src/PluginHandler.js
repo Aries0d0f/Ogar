@@ -2,6 +2,7 @@ var ini = require('./modules/ini'),
     fs = require('fs'),
     CommandList = require('./modules/CommandList'),
     GamemodeList = require('./gamemodes/GamemodeList');
+    path = require('path');
 
 function PluginHandler(gameServer) {
     this.gameServer = gameServer;
@@ -15,7 +16,7 @@ module.exports = PluginHandler;
 
 PluginHandler.prototype.readOptions = function() {
     try {
-        this.options = ini.parse(fs.readFileSync('./plugins/options.ini', 'utf-8'));
+        this.options = ini.parse(fs.readFileSync(path.resolve(__dirname, './plugins/options.ini'), 'utf-8'));
     } catch(e) {
         // File probably not available
         console.log("[Info] options.ini not found, creating one");
