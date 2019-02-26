@@ -28,7 +28,7 @@ PacketHandler.prototype.handleMessage = function(message) {
                 var name = message.slice(1, message.length - 1).toString('ucs2').substr(0, this.gameServer.config.playerMaxNickLength);
                 this.setNickname(name);
             } else {
-                var name = message.slice(1, message.length - 1).toString('utf-8').substr(0, this.gameServer.config.playerMaxNickLength);
+                var name = message.slice(1, message.length - 1).toString('utf8').substr(0, this.gameServer.config.playerMaxNickLength);
                 this.setNickname(name);
             }
             break;
