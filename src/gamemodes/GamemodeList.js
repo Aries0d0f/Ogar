@@ -6,6 +6,7 @@ function GamemodeList(gameServer) {
         '1': require('./Teams'),
         '2': require('./Experimental'),
         '3': require('./Rainbow'),
+        '4': require('./DoubleTeams'),
 
         '10': require('./Tournament'),
         '11': require('./HungerGames'),
