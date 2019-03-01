@@ -1,10 +1,10 @@
 var Mode = require('./Mode');
 
-function Teams() {
+function DoubleTeams() {
     Mode.apply(this, Array.prototype.slice.call(arguments));
 
     this.ID = 1;
-    this.name = "Teams";
+    this.name = "DoubleTeams";
     this.decayMod = 1.5;
     this.packetLB = 51;
     this.haveTeams = true;
@@ -30,20 +30,20 @@ function Teams() {
         'g': 0,
         'b': 0
     }, ]; // Make sure you add extra colors here if you wish to increase the team amount [Default colors are: Red, Green, Blue]
-    this.nodes = []; // Teams
+    this.nodes = []; // DoubleTeams
 }
 
-module.exports = Teams;
-Teams.prototype = new Mode();
+module.exports = DoubleTeams;
+DoubleTeams.prototype = new Mode();
 
 //Gamemode Specific Functions
 
-Teams.prototype.fuzzColorComponent = function(component) {
+DoubleTeams.prototype.fuzzColorComponent = function(component) {
     component += Math.random() * this.colorFuzziness >> 0;
     return range(component, 0, 255);
 };
 
-Teams.prototype.getTeamColor = function(team) {
+DoubleTeams.prototype.getTeamColor = function(team) {
     var color = this.colors[team];
     return {
         r: this.fuzzColorComponent(color.r),
@@ -58,7 +58,7 @@ function range(a, min, max) {
 
 // Override
 
-Teams.prototype.onPlayerSpawn = function(gameServer, player) {
+DoubleTeams.prototype.onPlayerSpawn = function(gameServer, player) {
     console.log({ 'name': player.name, 'team': this.teamName[player.team] })
     // Random color based on team
     player.color = this.getTeamColor(player.team);
@@ -66,7 +66,7 @@ Teams.prototype.onPlayerSpawn = function(gameServer, player) {
     gameServer.spawnPlayer(player);
 };
 
-Teams.prototype.onServerInit = function(gameServer) {
+DoubleTeams.prototype.onServerInit = function(gameServer) {
     // Set up teams
     for (var i = 0; i < this.teamAmount; i++) {
         this.nodes[i] = [];
@@ -89,16 +89,16 @@ Teams.prototype.onServerInit = function(gameServer) {
     }
 };
 
-Teams.prototype.onPlayerInit = function(player) {
+DoubleTeams.prototype.onPlayerInit = function(player) {
     // Get random team
 };
 
-Teams.prototype.onCellAdd = function(cell) {
+DoubleTeams.prototype.onCellAdd = function(cell) {
     // Add to team list
     this.nodes[cell.owner.getTeam()].push(cell);
 };
 
-Teams.prototype.onCellRemove = function(cell) {
+DoubleTeams.prototype.onCellRemove = function(cell) {
     // Remove from team list
     var index = this.nodes[cell.owner.getTeam()].indexOf(cell);
     if (index != -1) {
@@ -106,7 +106,7 @@ Teams.prototype.onCellRemove = function(cell) {
     }
 };
 
-Teams.prototype.onCellMove = function(cell, gameServer) {
+DoubleTeams.prototype.onCellMove = function(cell, gameServer) {
     var team = cell.owner.getTeam();
     
     if (cell.collisionRestoreTicks > 0) return; // Can't collide
@@ -123,7 +123,7 @@ Teams.prototype.onCellMove = function(cell, gameServer) {
     }
 };
 
-Teams.prototype.updateLB = function(gameServer) {
+DoubleTeams.prototype.updateLB = function(gameServer) {
     // FFA-like
     var leaderboard = [];
 
