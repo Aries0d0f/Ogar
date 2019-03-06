@@ -2,8 +2,6 @@
   "apps": [{
     "name": "ZMS-Ogar-Server",
     "script": "./src/index.js",
-    "instances" : "max",
-    "exec_mode" : "cluster",
-    "watch": true
+    "args": ["--noconsole"]
   }]
 }
