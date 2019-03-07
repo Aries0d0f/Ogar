@@ -58,7 +58,7 @@ function GameServer() {
 
     // Config
     this.config = { // Border - Right: X increases, Down: Y increases (as of 2015-05-20)
-        serverMaxConnections: 64, // Maximum amount of connections to the server.
+        serverMaxConnections: 128, // Maximum amount of connections to the server.
         serverPort: 443, // Server port
         serverGamemode: 0, // Gamemode, 0 = FFA, 1 = Teams
         serverBots: 0, // Amount of player bots to spawn
@@ -76,9 +76,9 @@ function GameServer() {
         scrambleIDs: 1,
         scrambleColors: 0,
         borderLeft: 0, // Left border of map (Vanilla value: 0)
-        borderRight: 6000, // Right border of map (Vanilla value: 14142.135623730952)
+        borderRight: 12000, // Right border of map (Vanilla value: 14142.135623730952)
         borderTop: 0, // Top border of map (Vanilla value: 0)
-        borderBottom: 6000, // Bottom border of map (Vanilla value: 14142.135623730952)
+        borderBottom: 12000, // Bottom border of map (Vanilla value: 14142.135623730952)
         spawnInterval: 20, // The interval between each food cell spawn in ticks (1 tick = 50 ms)
         foodSpawnAmount: 10, // The amount of food to spawn per interval
         foodStartAmount: 100, // The starting amount of food in the map
